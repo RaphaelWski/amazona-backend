@@ -34,6 +34,21 @@ router.get("/:productId", async (req, res) => {
     }
 });
 
+router.patch("/:productId", async (req, res) => {
+    try {
+        const updatedProduct = await Product.updateOne(
+            {_id: req.params.productId},
+            {$set: { 
+                name: req.body.name,
+                description: req.body.description,
+            }
+        });
+        res.send(updatedProduct);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
 router.delete("/:productId", async (req, res) => {
     try {
         const removedProduct = await Product.deleteOne({_id: req.params.productId});

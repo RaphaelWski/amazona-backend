@@ -31,10 +31,10 @@ router.get("/createadmin", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const user = new User({
-            name: req.param.name,
-            email: req.param.email,
-            password: req.param.password,
-            isAdmin: req.param.isAdmin
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            isAdmin: req.body.isAdmin
         });
         
         const newUser = await user.save();
@@ -48,6 +48,23 @@ router.get("/:userId", async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);
         res.send(user);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
+router.patch("/:userId", async (req, res) => {
+    try {
+        const updatedUser = await User.updateOne(
+            {_id: req.params.userId},
+            {$set: { 
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                isAdmin: req.body.isAdmin,
+            }
+        });
+        res.send(updatedUser);
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }
