@@ -21,12 +21,7 @@ app.use('/products', productsRoute);
 
 // Routes
 app.get("/", async (req, res) => {
-    try {
-        const newProduct = await product.save();
-        res.send(newProduct);
-    } catch(error) {
-        res.send("ERROR: " + {message:error});
-    }
+    res.send("We're at home");
 });
 
 // MongoDB

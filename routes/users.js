@@ -4,7 +4,12 @@ const User = require('../models/User');
 
 
 router.get("/", async (req, res) => {
-    res.send("We're on user");
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
 });
 
 router.get("/createadmin", async (req, res) => {

@@ -3,7 +3,12 @@ const router = express.Router();
 const Product = require('../models/Product');
 
 router.get("/", async (req, res) => {
-    res.send("We're on products");
+    try {
+        const products = await Product.find();
+        res.send(products);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
 });
 
 router.post("/", async (req, res) => {
