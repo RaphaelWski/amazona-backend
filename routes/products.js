@@ -34,4 +34,13 @@ router.get("/:productId", async (req, res) => {
     }
 });
 
+router.delete("/:productId", async (req, res) => {
+    try {
+        const removedProduct = await Product.deleteOne({_id: req.params.productId});
+        res.send(removedProduct);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
 module.exports = router;

@@ -29,15 +29,34 @@ router.get("/createadmin", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    console.log(req.body);
-    // const product = req.body
-    res.send("Created a new user");
+    try {
+        const user = new User({
+            name: req.param.name,
+            email: req.param.email,
+            password: req.param.password,
+            isAdmin: req.param.isAdmin
+        });
+        
+        const newUser = await user.save();
+        res.send(newUser);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
 });
 
 router.get("/:userId", async (req, res) => {
     try {
         const user = await User.findById(req.params.userId);
         res.send(user);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
+router.delete("/:userId", async (req, res) => {
+    try {
+        const removedUser = await User.deleteOne({_id: req.params.userId});
+        res.send(removedUser);
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }
