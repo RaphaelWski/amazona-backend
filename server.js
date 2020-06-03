@@ -1,6 +1,7 @@
 const express = require ('express');
 const mongoose = require ('mongoose');
 const dotenv = require ('dotenv');
+const cors = require ('cors');
 const app = express();
 
 // const data = require ('./data');
@@ -9,6 +10,7 @@ const config = require ('./config');
 dotenv.config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 // Routes
 app.get("/", async (req, res) => {

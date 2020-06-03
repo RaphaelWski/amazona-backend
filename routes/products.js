@@ -5,9 +5,9 @@ const Product = require('../models/Product');
 router.get("/", async (req, res) => {
     try {
         const products = await Product.find();
-        res.send(products);
+        res.status(200).send(products);
     } catch(error) {
-        res.send("ERROR: " + {message:error});
+        res.status(500).send("ERROR: " + {message:error});
     }
 });
 
@@ -34,7 +34,7 @@ router.get("/:productId", async (req, res) => {
     }
 });
 
-router.patch("/:productId", async (req, res) => {
+router.put("/:productId", async (req, res) => {
     try {
         const updatedProduct = await Product.updateOne(
             {_id: req.params.productId},

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-
+const Util = require('../util');
 
 router.get("/", async (req, res) => {
     try {
@@ -23,6 +23,41 @@ router.get("/createadmin", async (req, res) => {
         
         const newUser = await user.save();
         res.send(newUser);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
+router.post("/signin", async (req, res) => {
+    try {
+        const signinUser = await User.findOne({
+            email: req.body.email,
+            password: req.body.password
+        });
+
+        if(signinUser) {
+            res.send({
+                _id: signinUser.id,
+                name: signinUser.name,
+                email: signinUser.email,
+                isAdmin: signinUser.isAdmin,
+                token: Util.getToken(signinUser)
+            })
+            // res.send.json({
+            //     _id: signinUser.id,
+            //     name: signinUser.name,
+            //     email: signinUser.email,
+            //     isAdmin: signinUser.isAdmin,
+            //     token: Util.getToken(signinUser)
+            // })
+            // res.send(Util.getToken(signinUser));
+            // res.send(Util.getToken(signinUser));
+            // res.send(signinUser);
+        } else {
+            res.status(401).send({msg:'Invalid Email or Password'});
+        }
+
+        // res.status(200);
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }
@@ -53,7 +88,7 @@ router.get("/:userId", async (req, res) => {
     }
 });
 
-router.patch("/:userId", async (req, res) => {
+router.put("/:userId", async (req, res) => {
     try {
         const updatedUser = await User.updateOne(
             {_id: req.params.userId},
