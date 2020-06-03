@@ -25,4 +25,13 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.get("/:productId", async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.productId);
+        res.send(product);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
 module.exports = router;

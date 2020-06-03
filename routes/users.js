@@ -34,4 +34,13 @@ router.post("/", async (req, res) => {
     res.send("Created a new user");
 });
 
+router.get("/:userId", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        res.send(user);
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
+
 module.exports = router;
