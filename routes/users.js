@@ -43,21 +43,34 @@ router.post("/signin", async (req, res) => {
                 isAdmin: signinUser.isAdmin,
                 token: Util.getToken(signinUser)
             })
-            // res.send.json({
-            //     _id: signinUser.id,
-            //     name: signinUser.name,
-            //     email: signinUser.email,
-            //     isAdmin: signinUser.isAdmin,
-            //     token: Util.getToken(signinUser)
-            // })
-            // res.send(Util.getToken(signinUser));
-            // res.send(Util.getToken(signinUser));
-            // res.send(signinUser);
         } else {
             res.status(401).send({msg:'Invalid Email or Password'});
         }
+    } catch(error) {
+        res.send("ERROR: " + {message:error});
+    }
+});
 
-        // res.status(200);
+router.post("/register", async (req, res) => {
+    try {
+        const user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+        });
+
+        const newUser = await User.save();
+        if(newUser) {
+            res.send({
+                _id: newUser.id,
+                name: newUser.name,
+                email: newUser.email,
+                isAdmin: newUser.isAdmin,
+                token: Util.getToken(newUser)
+            })
+        } else {
+            res.status(401).send({msg:'Invalid User data'});
+        }
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }

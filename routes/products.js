@@ -15,11 +15,20 @@ router.post("/", async (req, res) => {
     try {
         const product = new Product({
             name: req.body.name,
+            image: req.body.image,
+            brand: req.body.brand,
+            price: req.body.price,
+            category: req.body.category,
+            countInStock: req.body.countInStock,
             description: req.body.description
         });
         
         const newProduct = await product.save();
-        res.send(newProduct);
+        if(newProduct){
+            res.status(201).send({ message: 'New Product Created', data: newProduct });
+        } else {
+            res.status(500).send({ message: 'Error while creating Product' });
+        }
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }
@@ -40,7 +49,12 @@ router.put("/:productId", async (req, res) => {
             {_id: req.params.productId},
             {$set: { 
                 name: req.body.name,
-                description: req.body.description,
+                image: req.body.image,
+                brand: req.body.brand,
+                price: req.body.price,
+                category: req.body.category,
+                countInStock: req.body.countInStock,
+                description: req.body.description
             }
         });
         res.send(updatedProduct);
