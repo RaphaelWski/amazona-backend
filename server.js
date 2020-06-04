@@ -20,6 +20,8 @@ app.get("/", async (req, res) => {
 // Import Routes
 const usersRoute = require('./routes/users')
 app.use('/users', usersRoute);
+const categoriesRoute = require('./routes/categories')
+app.use('/categories', categoriesRoute);
 const productsRoute = require('./routes/products')
 app.use('/products', productsRoute);
 
