@@ -37,7 +37,11 @@ router.post("/", async (req, res) => {
 router.get("/:productId", async (req, res) => {
     try {
         const product = await Product.findById(req.params.productId);
-        res.send(product);
+        if(product){
+            res.send(product);
+        } else {
+            res.status(404).send({ message: 'Product with id ' + req.params.productId + ' not found.'});
+        }
     } catch(error) {
         res.send("ERROR: " + {message:error});
     }

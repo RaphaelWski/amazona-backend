@@ -24,6 +24,8 @@ const categoriesRoute = require('./routes/categories')
 app.use('/categories', categoriesRoute);
 const productsRoute = require('./routes/products')
 app.use('/products', productsRoute);
+const ordersRoute = require('./routes/orders')
+app.use('/orders', ordersRoute);
 
 // MongoDB
 const mongodbUrl = config.MONGODB_URL;
