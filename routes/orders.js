@@ -106,6 +106,6 @@ router.get("/mine", Util.isAuth, async (req, res) => {
     } else {
         res.status(404).send({ message: 'Orders not found.' })
     }
-})
+});
 
 module.exports = router;

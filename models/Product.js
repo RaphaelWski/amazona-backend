@@ -7,6 +7,7 @@ const ProductSchema = mongoose.Schema({
     },
     image: {
         type : String,
+        default: '/images/default.jpg',
         required : true
     },
     brand: {
@@ -31,17 +32,17 @@ const ProductSchema = mongoose.Schema({
     description: {
         type : String,
         required : true
+    },
+    rating: {
+        type : Number,
+        default: 0,
+        required : true
+    },
+    numReviews: {
+        type : Number,
+        default: 0,
+        required : true
     }
-    // rating: {
-    //     type : Number,
-    //     default: 0,
-    //     required : true
-    // },
-    // numReviews: {
-    //     type : Number,
-    //     default: 0,
-    //     required : true
-    // }
 })
 
 module.exports = mongoose.model('Products', ProductSchema);
