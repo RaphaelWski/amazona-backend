@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
+const Util = require('../util');
 
-router.get("/", async (req, res) => {
+router.get("/", Util.isAuth, async (req, res) => {
     try {
         const orders = await Order.find();
         res.status(200).send(orders);
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", Util.isAuth, async (req, res) => {
     try {
         const newOrder = new Order({
             orderItems: req.body.orderItems,
@@ -35,7 +36,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/:orderId", async (req, res) => {
+router.get("/:orderId", Util.isAuth, async (req, res) => {
     try {
         const order = await Order.findById(req.params.orderId);
         if(order){
