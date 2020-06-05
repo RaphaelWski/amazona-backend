@@ -26,6 +26,9 @@ const productsRoute = require('./routes/products')
 app.use('/products', productsRoute);
 const ordersRoute = require('./routes/orders')
 app.use('/orders', ordersRoute);
+app.get("/api/config/paypal", (req, res) => {
+    res.send(config.PAYPAL_CLIENT_ID);
+  })
 
 // MongoDB
 const mongodbUrl = config.MONGODB_URL;
